@@ -33,7 +33,7 @@ const queue = new Map();
 
 client.on('voiceStateUpdate', (oldState, newState) => {
     if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
-  if (newState.channel.id !== client.user.id) return;
+  if (newState.id !== client.user.id) return;
   return queue.delete(oldState.guild.id);
   
 });
