@@ -31,6 +31,13 @@ fs.readdir("./commands/", (e, f) => {
 
 const queue = new Map();
 
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (oldState.channelID === null || typeof oldstate.channelID == 'undefined') return;
+  if (newState.channel.id !== client.user.id) return;
+  return queue.delete(oldState.guild.id);
+  
+});
+
 client.on("ready", () => {
     console.log("I am online!");
     client.user.setActivity("?help", {
@@ -38,13 +45,6 @@ client.on("ready", () => {
         url: "https://www.twitch.tv/sbeeeeeeeeeeeeeeeeeeeve"
     });
 });
-
-client.on('voiceStateUpdate', (oldState, newState) => {
-    if (oldState.channelID === null || typeof oldstate.channelID == 'undefined') return;
-  if (newState.channel.id !== client.user.id) return;
-  return queue.delete(oldState.guild.id);
-  
-  });
 
 client.on("message", async(message) => {
     const prefix = '?';
