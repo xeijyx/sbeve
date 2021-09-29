@@ -4,10 +4,9 @@ module.exports.run = (client, message, args, queue, searcher) => {
             return message.channel.send("no music playing")
     if(message.member.voice.channel != message.guild.me.voice.channel)
         return message.channel.send("ur not in that vc")
-    serverQueue.songs = [''];
-    connection.dispatcher.destroy();
+    serverQueue.songs = [];
+    serverQueue.connection.dispatcher.end();
 }
-
 module.exports.config = {
     name: "stop",
     description: "stops and disconnects sbeve",
