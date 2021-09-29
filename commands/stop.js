@@ -4,8 +4,8 @@ module.exports.run = (client, message, args, queue, searcher) => {
             return message.channel.send("no music playing")
     if(message.member.voice.channel != message.guild.me.voice.channel)
         return message.channel.send("ur not in that vc")
-    serverQueue.songs = [];
-    serverQueue.connection.dispatcher.end();
+    serverQueue.songs = [0];
+    serverQueue.connection.dispatcher.destroy();
 }
 
 module.exports.config = {
