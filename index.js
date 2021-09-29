@@ -16,7 +16,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-cconnection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+connection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
 	try {
 		await Promise.race([
 			entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
