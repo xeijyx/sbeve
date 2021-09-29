@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const { measureMemory } = require('vm');
 const ytdl = require('ytdl-core');
 const fs = require('fs')
-const { VoiceConnectionStatus, entersState} = require('@discordjs/voice');
+const { connection, on, Signalling, Connecting, VoiceConnectionStatus, entersState} = require('@discordjs/voice');
 
 const { YTSearcher } = require('ytsearcher');
 
