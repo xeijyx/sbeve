@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { measureMemory } = require('vm');
 const ytdl = require('ytdl-core');
 const fs = require('fs')
+const { VoiceConnectionStatus, entersState} = require('@discordjs/voice')
 
 const { YTSearcher } = require('ytsearcher');
 
@@ -15,20 +16,17 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-client.on('voiceStateUpdate', async (old, neww)=>{
-    if(old.voiceChannel && !neww.voiceChannel)
-    {    
-        if(queue.get(old.guild.id))
-        {        
-            try {
-                await old.voiceChannel.join();
-                console.log('connected');
-            } 
-            catch (err) {
-                console.log(err);
-            }
-        }
-    }
+cconnection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+	try {
+		await Promise.race([
+			entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+			entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+		]);
+		// if seems 2b reconnecting to a new channel -> ignores disconnect
+	} catch (error) {
+		// if it seems 2b a real disconnect which shouldnt be recovered from
+		connection.destroy();
+	}
 });
 
 fs.readdir("./commands/", (e, f) => {
