@@ -31,13 +31,6 @@ fs.readdir("./commands/", (e, f) => {
 
 const queue = new Map();
 
-client.on('voiceStateUpdate', (oldState, newState) => {
-    if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
-  if (newState.id !== client.user.id) return;
-  return queue.delete(oldState.guild.id);
-  
-});
-
 client.on("ready", () => {
     console.log("I am online!");
     client.user.setActivity("?help", {
@@ -65,4 +58,12 @@ client.on("message", async(message) => {
     }
         
 })
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
+  if (newState.id !== client.user.id) return;
+  return queue.delete(oldState.guild.id);
+  
+});
+
 client.login(process.env.TOKEN);
