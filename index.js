@@ -15,6 +15,22 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
+client.on('voiceStateUpdate', async (old, neww)=>{
+    if(old.voiceChannel && !neww.voiceChannel)
+    {    
+        if(queue.get(old.guild.id))
+        {        
+            try {
+                await old.voiceChannel.join();
+                console.log('connected');
+            } 
+            catch (err) {
+                console.log(err);
+            }
+        }
+    }
+});
+
 fs.readdir("./commands/", (e, f) => {
     if(e) return console.error(e);
     f.forEach(file => {
