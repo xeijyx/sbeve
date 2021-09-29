@@ -39,6 +39,13 @@ client.on("ready", () => {
     });
 });
 
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (oldState.channelID === null || typeof oldstate.channelID == 'undefined') return;
+  if (newState.channel.id !== client.user.id) return;
+  return queue.delete(oldState.guild.id);
+  
+  });
+
 client.on("message", async(message) => {
     const prefix = '?';
 
