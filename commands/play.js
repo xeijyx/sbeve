@@ -21,31 +21,31 @@ function timeFormat(duration) {
 module.exports.run = async (client, message, args, queue, searcher) => {
 const vc = message.member.voice.channel;
 if(!vc)
-    return message.channel.send("Please join a voice channel first");
+    return message.channel.send("join a vc first");
 if (args.length < 1)
-    return message.channel.send("Please enter something to search")
+    return message.channel.send("enter something to search")
 let url = args.join("");
 if(url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)){
     try{
         await ytpl(url).then(async playlist => {
-            message.channel.send(`The playlist: "${playlist.title}" has been added`)
+            message.channel.send(`playlist: "${playlist.title}" has been added`)
             playlist.items.forEach(async item => {
                 await videoHandler(await ytdl.getInfo(item.shortUrl), message, vc, true);
             })
         })
     }catch(err){
-        return message.channel.send(`Please insert a valid link or make sure that the playlist is visible\n${err}`)
+        return message.channel.send(`playlist is either private or link is invalid\n${err}`)
     }
 }
 else{
     let result = await searcher.search(args.join(" "), { type: "video" })
     if(result.first == null)
-        return message.channel.send("There are no results found");
+        return message.channel.send("no results found");
     try {
     let songInfo = await ytdl.getInfo(result.first.url);
     return videoHandler(songInfo, message, vc)
     }catch(err){
-        message.channel.send(`Cannot queue song :c \n ${err} `)
+        message.channel.send(`cannot queue song \n ${err} `)
         console.log(err)
     }
 
@@ -83,7 +83,7 @@ async function videoHandler(songInfo, message, vc, playlist = false){
         }catch (err){
             console.error(err);
             queue.delete(message.guild.id);
-            return message.channel.send(`Unable to join the voice chat ${err}`)
+            return message.channel.send(`unable to join vc ${err}`)
         }
     }else{
         serverQueue.songs.push(song);
@@ -97,7 +97,7 @@ async function videoHandler(songInfo, message, vc, playlist = false){
             .addField("Song duration: ", dur)
             .addField("Song Place", serverQueue.songs.lastIndexOf(song) + 1)
             .setThumbnail(song.thumbnail)
-            .setColor("PURPLE")
+            .setColor("#C69EF7")
         return message.channel.send(msg);
     }
 }
@@ -128,7 +128,7 @@ function play(guild, song){
             .addField(serverQueue.songs[0].title, "----------")
             .addField("Song duration: ", dur)
             .setThumbnail(serverQueue.songs[0].thumbnail)
-            .setColor("PURPLE")
+            .setColor("#C69EF7")
         return message.channel.send(msg);
     }
 }
