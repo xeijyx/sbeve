@@ -32,7 +32,7 @@ fs.readdir("./commands/", (e, f) => {
 const queue = new Map();
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-    if (oldState.channelID === null || typeof oldstate.channelID == 'undefined') return;
+    if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
   if (newState.channel.id !== client.user.id) return;
   return queue.delete(oldState.guild.id);
   
