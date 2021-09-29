@@ -3,15 +3,15 @@ const Discord = require('discord.js')
 module.exports.run = async (client, message, args, queue, searcher) => {
     const serverQueue = queue.get(message.guild.id);
     if(!serverQueue)
-        return message.channel.send("There is no music currently playing!");
+        return message.channel.send("cant play nunn");
     if(message.member.voice.channel != message.guild.me.voice.channel)
-        return message.channel.send("You are not in the voice channel!")
+        return message.channel.send("ur not in a vc")
 
         let currentPage = 0;
     
         const embeds = embedGenerator(serverQueue)
     
-        const queueEmbed = await message.channel.send(`Queue page: ${currentPage+1}/${embeds.length}`, embeds[currentPage])
+        const queueEmbed = await message.channel.send(`queue page: ${currentPage+1}/${embeds.length}`, embeds[currentPage])
         await queueEmbed.react('⬅️');
         await queueEmbed.react('➡️');
     
@@ -22,13 +22,13 @@ module.exports.run = async (client, message, args, queue, searcher) => {
             if(reaction.emoji.name === '➡️'){
                 if(currentPage < embeds.length-1){
                     currentPage+=1;
-                    queueEmbed.edit(`Queue page: ${currentPage+1}/${embeds.length}`, embeds[currentPage]);
+                    queueEmbed.edit(`queue page: ${currentPage+1}/${embeds.length}`, embeds[currentPage]);
                     message.reactions.resolve(reaction).users.remove(user)
                 }
             }else if(reaction.emoji.name === '⬅️'){
                 if (currentPage !== 0){
                     currentPage -= 1;
-                    queueEmbed.edit(`Queue page: ${currentPage+1}/${embeds.length}`, embeds[currentPage])
+                    queueEmbed.edit(`queue page: ${currentPage+1}/${embeds.length}`, embeds[currentPage])
                     message.reactions.resolve(reaction).users.remove(user)
                 }
             }
@@ -44,7 +44,7 @@ module.exports.run = async (client, message, args, queue, searcher) => {
             let j = i-1;
             const info = current.map(song => `${++j}. [${song.title}](${song.url})`).join('\n')
             const msg = new Discord.MessageEmbed()
-                .setDescription(`Now playing: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) \n ${info}`)
+                .setDescription(`playing: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) \n ${info}`)
     
             embeds.push(msg)
         }
@@ -54,5 +54,5 @@ module.exports.run = async (client, message, args, queue, searcher) => {
 module.exports.config = {
     name: "queue",
     description: "shows the queue",
-    aliases: ["q", "np"]
+    aliases: ["q"]
 }

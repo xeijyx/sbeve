@@ -15,6 +15,13 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
+    if (newState.id !== client.user.id) return;
+    return queue.delete(oldState.guild.id);
+
+    });
+
 fs.readdir("./commands/", (e, f) => {
     if(e) return console.error(e);
     f.forEach(file => {

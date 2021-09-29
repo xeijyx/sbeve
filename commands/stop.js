@@ -9,6 +9,6 @@ module.exports.run = (client, message, args, queue, searcher) => {
 }
 module.exports.config = {
     name: "stop",
-    description: "stops and disconnects sbeve",
+    description: "kills sbeve",
     aliases: ["kys", "st"]
 }
