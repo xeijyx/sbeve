@@ -16,8 +16,11 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
 client.on('voiceStateUpdate', (oldState, newState) => {
+    //cringegus
     if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
+    //bungus
     if (newState.id !== client.user.id) return;
+    //chungus
     return queue.delete(oldState.guild.id);
 
     });
